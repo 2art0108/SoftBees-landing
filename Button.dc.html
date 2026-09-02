@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<sc-if value="{{ isPurple }}" hint-placeholder-val="{{ false }}">
+  <a onClick="{{ onClick }}" style="{{ btnStyle }}" style-hover="background:rgba(110,0,228,.85)">{{ label }}</a>
+</sc-if>
+<sc-if value="{{ isFrosted }}" hint-placeholder-val="{{ false }}">
+  <a onClick="{{ onClick }}" style="{{ btnStyle }}" style-hover="background:rgba(255,255,255,.05)">{{ label }}</a>
+</sc-if>
+<sc-if value="{{ isWhite }}" hint-placeholder-val="{{ false }}">
+  <a onClick="{{ onClick }}" style="{{ btnStyle }}" style-hover="background:rgba(247,246,244,.94)">{{ label }}</a>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:220,&quot;height&quot;:60},&quot;label&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Замовити консультацію&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;size&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;M&quot;,&quot;options&quot;:[&quot;L&quot;,&quot;M&quot;,&quot;S&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;purple&quot;,&quot;options&quot;:[&quot;purple&quot;,&quot;white&quot;,&quot;frosted&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;onClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const size = this.props.size ?? 'M';
+    const variant = this.props.variant ?? 'purple';
+    const sizes = {
+      L: {padding: '12px 19px', fontSize: '1rem', borderRadius: 12},
+      M: {padding: '9px 15px', fontSize: '.94rem', borderRadius: 10},
+      S: {padding: '4px 12px', fontSize: '.94rem', borderRadius: 8}
+    };
+    const variants = {
+      purple: {background: '#6E00E4', color: '#fff'},
+      frosted: {background: 'rgba(255,255,255,.08)', backdropFilter: 'blur(16px) saturate(160%)', WebkitBackdropFilter: 'blur(16px) saturate(160%)', color: '#F7F6F4'},
+      white: {background: '#fff', color: '#0a0a0c'}
+    };
+    const s = sizes[size] ?? sizes.M;
+    const v = variants[variant] ?? variants.purple;
+    return {
+      label: this.props.label ?? '',
+      onClick: this.props.onClick ?? (() => {}),
+      isPurple: variant === 'purple',
+      isFrosted: variant === 'frosted',
+      isWhite: variant === 'white',
+      btnStyle: {
+        position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 9, flex: 'none', whiteSpace: 'nowrap',
+        padding: s.padding, fontSize: s.fontSize, fontWeight: 500, borderRadius: s.borderRadius,
+        letterSpacing: '0em', border: 'none', cursor: 'pointer', textDecoration: 'none', transition: 'background .25s ease',
+        ...v
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>
