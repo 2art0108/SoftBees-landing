@@ -1,17 +1,47 @@
-# SoftBees — Static Site Deploy Package
+# SoftBees Website
 
-Single self-contained `index.html` — all components, data, and assets are bundled inline. No build step, no dependencies, no server-side logic.
+Static marketing site (home, products, portfolio, blog, about) with hash-based
+in-app navigation, a hero carousel, sticky blog filters, and an events/portfolio
+grid.
 
-## Contents
-- `index.html` — the entire site (bundled). Opens correctly by double-clicking it directly, or served from any static host.
+## Structure
 
-## Deploying to GitHub Pages
-1. Push `index.html` to the root of a GitHub repo (or to a `docs/` folder, or the `gh-pages` branch).
-2. In the repo settings → Pages, set the source to that branch/folder.
-3. GitHub Pages serves it as-is — no build step required.
+- `public/index.html` — **the deployed site.** A single self-contained bundle:
+  all component markup, styles, data, and assets (images/fonts as base64) are
+  inlined. This is what `npm run build` copies to `dist/` and what Vercel serves.
+- `src/` — original component sources (SoftBees, EventCard, PortfolioCard,
+  Button, Badge, ContentTitleGroup, FinalCTA) and `softbees-data.js`, the
+  content/data module they're built from. Kept for reference/future edits;
+  not consumed directly by the build.
+- `assets/` — raw source assets (event covers, logos, tech icons, fonts,
+  social icons) already inlined into `public/index.html`. Kept for reference
+  and reuse.
 
-Works on any static host (Netlify, Vercel, S3, Cloudflare Pages, etc.) the same way: upload `index.html`, done.
+## Local development
+
+```
+npm install
+npm run dev      # serves public/ at http://localhost:3000
+```
+
+## Production build
+
+```
+npm install
+npm run build    # copies public/ → dist/
+npm start         # serves dist/ at http://localhost:3000
+```
+
+## Deploying to Vercel
+
+1. Push this repo to GitHub.
+2. Import it in Vercel — `vercel.json` sets the build command (`npm run build`)
+   and output directory (`dist`) already, so no manual config is needed.
+3. Deploy. The site needs an internet connection at runtime only for the
+   Google/Inter font and one background animation script loaded from public
+   CDNs — everything else (all images, fonts, components) is bundled offline.
 
 ## Notes
-- In-app navigation (Products/Portfolio/Blog/About) uses URL hash routing — works standalone and once deployed.
-- A couple of external resources (Google/Inter font, a background 3D animation script, one placeholder avatar image) load from public CDNs at runtime — an internet connection is needed for those to appear; the rest of the site works fully offline.
+
+- No design or functionality was changed in packaging this build — `public/index.html`
+  is the same bundle previously verified in the design tool.

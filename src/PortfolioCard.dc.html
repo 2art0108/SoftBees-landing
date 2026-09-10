@@ -10,9 +10,10 @@
 <article onClick="{{ onClick }}" onMouseEnter="{{ onMouseEnter }}" onMouseLeave="{{ onMouseLeave }}" style="{{ cardStyle }}">
   <div style="padding:8px">
     <div style="aspect-ratio:16/10;position:relative;overflow:hidden;border-radius:16px">
-      {{ vizEl }}
+      <div ref="{{ setParallaxRef }}" style="position:absolute;left:0;right:0;top:-14px;height:calc(100% + 28px)">
+        <div style="{{ imgWrapStyle }}">{{ vizEl }}</div>
+      </div>
       <div style="position:absolute;top:12px;left:12px"><dc-import name="Badge" label="{{ tag }}" variant="frosted" hint-size="auto,24px"></dc-import></div>
-      <span style="position:absolute;top:14px;right:14px;display:inline-flex;align-items:center;gap:6px;font-family:'InterVariable','Inter',sans-serif;font-feature-settings:'cv11' 1;font-size:.84rem;font-weight:500;color:{{ actionColor }};opacity:{{ revealOpacity }};transform:{{ revealTransform }};transition:opacity .3s ease,transform .3s cubic-bezier(.22,.61,.28,1),color .22s ease">Дізнатися більше <span style="display:inline-block;transform:{{ arrowTransform }};transition:transform .28s cubic-bezier(.22,.61,.28,1)">→</span></span>
     </div>
   </div>
   <div style="padding:14px 26px 28px;display:flex;flex-direction:column;flex:1;min-width:0">
@@ -23,26 +24,49 @@
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:420,&quot;height&quot;:360},&quot;title&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Проєкт&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;subtitle&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Короткий опис проєкту&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;tag&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Fintech&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;vizEl&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;React.ReactNode&quot;},&quot;onClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;},&quot;flexItem&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
 class Component extends DCLogic {
   state = { hover: false };
+  setParallaxRef = (el) => {
+    if (!el || el === this._pEl) return;
+    this._pEl = el;
+    if (!this._onScroll) {
+      this._onScroll = () => {
+        if (this._raf) return;
+        this._raf = requestAnimationFrame(() => {
+          this._raf = null;
+          if (!this._pEl) return;
+          const rect = this._pEl.getBoundingClientRect();
+          const vh = window.innerHeight || 1;
+          const progress = (vh - rect.top) / (vh + rect.height);
+          const shift = (progress - 0.5) * 24;
+          this._pEl.style.transform = 'translateY(' + shift.toFixed(2) + 'px)';
+        });
+      };
+      window.addEventListener('scroll', this._onScroll, {passive: true});
+    }
+    this._onScroll();
+  };
+  componentWillUnmount() {
+    if (this._onScroll) window.removeEventListener('scroll', this._onScroll);
+    if (this._raf) cancelAnimationFrame(this._raf);
+  }
   renderVals() {
     const flex = this.props.flexItem ?? false;
     return {
+      setParallaxRef: this.setParallaxRef,
       onClick: this.props.onClick ?? (() => {}),
       vizEl: this.props.vizEl,
       tag: this.props.tag ?? '',
       title: this.props.title ?? '',
       subtitle: this.props.subtitle ?? '',
-      revealOpacity: this.state.hover ? 1 : 0,
-      revealTransform: this.state.hover ? 'translateY(0)' : 'translateY(6px)',
-      actionColor: this.state.hover ? '#FFFFFF' : '#9c9caa',
-      arrowTransform: this.state.hover ? 'translateX(2px)' : 'translateX(0)',
+      imgWrapStyle: {
+        width: '100%', height: '100%', transform: this.state.hover ? 'scale(1.045)' : 'scale(1)',
+        transition: 'transform .6s ease-out'
+      },
       cardStyle: {
         position: 'relative', boxSizing: 'border-box', display: 'flex', flexDirection: 'column',
         flex: flex ? '0 0 clamp(320px,42vw,520px)' : undefined,
         height: '100%',
         borderRadius: 24, border: '1px solid rgba(255,255,255,.06)', background: 'rgba(255,255,255,.032)',
-        overflow: 'hidden', cursor: 'pointer', transition: 'transform .3s cubic-bezier(.22,.61,.28,1),box-shadow .3s ease',
-        transform: this.state.hover ? 'translateY(-4px)' : 'translateY(0)',
-        boxShadow: this.state.hover ? '0 16px 32px rgba(0,0,0,.35)' : 'none'
+        overflow: 'hidden', cursor: 'pointer'
       },
       onMouseEnter: () => this.setState({hover: true}),
       onMouseLeave: () => this.setState({hover: false})
