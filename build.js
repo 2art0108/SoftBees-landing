@@ -1,7 +1,6 @@
-// Production build for the SoftBees static site.
-// The site is a single self-contained HTML file (all CSS/JS/images/fonts
-// inlined) — there is no bundler step. This script just stages it, plus
-// the raw asset sources, into dist/ for Vercel (or any static host) to serve.
+// Production build for the SoftBees static site: no bundler is used —
+// the site runs as plain HTML/CSS/JS in the browser. This just stages
+// public/ (the runnable site + all its asset folders) into dist/.
 const fs = require("fs");
 const path = require("path");
 
@@ -10,11 +9,11 @@ const dist = path.join(root, "dist");
 
 if (fs.existsSync(dist)) fs.rmSync(dist, { recursive: true, force: true });
 fs.mkdirSync(dist, { recursive: true });
-
 fs.cpSync(path.join(root, "public"), dist, { recursive: true });
 
-if (!fs.existsSync(path.join(dist, "index.html"))) {
-  throw new Error("Build failed: dist/index.html missing after copy.");
+const required = ["index.html", "support.js", "softbees-data.js", "assets", "uploads"];
+for (const f of required) {
+  if (!fs.existsSync(path.join(dist, f))) throw new Error("Build failed: dist/" + f + " missing.");
 }
 
-console.log("Build complete → dist/index.html");
+console.log("Build complete → dist/ (site + assets)");

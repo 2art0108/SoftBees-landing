@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SoftBees — партнер із запуску необанків</title>
+<meta name="description" content="SoftBees — українська fintech-команда: банківська експертиза, власна платформа та AI-автоматизація для запуску цифрових банків.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2l12 7v14l-12 7-12-7V9z' fill='%23FFC24A'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+<!-- scroll progress indicator -->
+<div class="progress" id="progress"></div>
+
+<header class="header" id="header">
+  <div class="header-in">
+    <a class="brand" data-nav="#home" role="link" tabindex="0">
+      <svg class="brand-mark" viewBox="0 0 24 26" fill="none" aria-hidden="true">
+        <path d="M12 1l9.5 5.5v13L12 25 2.5 19.5v-13L12 1z" fill="url(#bm)"/>
+        <path d="M12 6.5l5 2.9v5.8l-5 2.9-5-2.9V9.4l5-2.9z" fill="#070709"/>
+        <defs><linearGradient id="bm" x1="2" y1="25" x2="22" y2="1"><stop stop-color="#8163FF"/><stop offset=".5" stop-color="#FF8A21"/><stop offset="1" stop-color="#FFD667"/></linearGradient></defs>
+      </svg>
+      SoftBees
+    </a>
+    <nav class="nav" id="nav">
+      <a data-nav="#home" role="link" tabindex="0" data-key="home">Головна</a>
+      <div class="has-mega" id="megaWrap">
+        <button class="navlink" id="megaBtn" aria-expanded="false" aria-haspopup="true">
+          Продукти
+          <svg class="caret" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 5l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </button>
+        <div class="mega" id="mega"></div>
+      </div>
+      <a data-nav="#portfolio" role="link" tabindex="0" data-key="portfolio">Портфоліо</a>
+      <a data-nav="#about" role="link" tabindex="0" data-key="about">Про компанію</a>
+      <a data-nav="#blog" role="link" tabindex="0" data-key="blog">Блог</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang" aria-label="Мова сайту"><b>UA</b><span tabindex="0" aria-disabled="true">EN</span></div>
+      <a class="btn btn--primary" data-nav="#contact" role="link" tabindex="0">Замовити консультацію
+        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <button class="burger" id="burger" aria-label="Меню" aria-expanded="false"><i></i></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a data-nav="#home" role="link" tabindex="0" style="--i:0">Головна</a>
+  <a data-nav="#products" role="link" tabindex="0" style="--i:1">Продукти</a>
+  <a data-nav="#portfolio" role="link" tabindex="0" style="--i:2">Портфоліо</a>
+  <a data-nav="#about" role="link" tabindex="0" style="--i:3">Про компанію</a>
+  <a data-nav="#blog" role="link" tabindex="0" style="--i:4">Блог</a>
+  <a class="btn btn--primary" data-nav="#contact" role="link" tabindex="0" style="--i:5">Замовити консультацію
+    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</div>
+
+<main id="app"></main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" data-nav="#home" role="link" tabindex="0">
+          <svg class="brand-mark" viewBox="0 0 24 26" fill="none" aria-hidden="true">
+            <path d="M12 1l9.5 5.5v13L12 25 2.5 19.5v-13L12 1z" fill="url(#bm2)"/>
+            <path d="M12 6.5l5 2.9v5.8l-5 2.9-5-2.9V9.4l5-2.9z" fill="#070709"/>
+            <defs><linearGradient id="bm2" x1="2" y1="25" x2="22" y2="1"><stop stop-color="#8163FF"/><stop offset=".5" stop-color="#FF8A21"/><stop offset="1" stop-color="#FFD667"/></linearGradient></defs>
+          </svg>
+          SoftBees
+        </a>
+        <p class="blurb">Партнер із запуску необанків. Технічна експертиза, власна платформа та AI-автоматизація для фінансових компаній.</p>
+      </div>
+      <div>
+        <h5>Навігація</h5>
+        <ul>
+          <li><a data-nav="#home" role="link" tabindex="0">Головна</a></li>
+          <li><a data-nav="#products" role="link" tabindex="0">Продукти</a></li>
+          <li><a data-nav="#portfolio" role="link" tabindex="0">Портфоліо</a></li>
+          <li><a data-nav="#blog" role="link" tabindex="0">Блог</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Продукти</h5>
+        <ul id="footerProducts"></ul>
+      </div>
+      <div>
+        <h5>Контакти</h5>
+        <ul>
+          <li><a href="mailto:info@softbees.com">info@softbees.com</a></li>
+          <li><a data-nav="#contact" role="link" tabindex="0">Київ, вул. Межигірська, 79А</a></li>
+          <li><a data-nav="#contact" role="link" tabindex="0">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="wordmark" aria-hidden="true">SoftBees</div>
+    <div class="footer-bottom">
+      <span>© 2026 SoftBees. Усі права захищені.</span>
+      <span>Київ · Варшава</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/visuals.js"></script>
+<script src="assets/js/data/products.js"></script>
+<script src="assets/js/data/cases.js"></script>
+<script src="assets/js/data/posts.js"></script>
+<script src="assets/js/data/details.products.js"></script>
+<script src="assets/js/data/details.cases.js"></script>
+<script src="assets/js/data/details.posts.js"></script>
+<script src="assets/js/data/details.posts-archive.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

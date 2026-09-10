@@ -1,0 +1,18 @@
+{
+  "name": "softbees-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SoftBees — neobank launch partner. Static single-page site: hash routing, no framework, no build step required for development.",
+  "scripts": {
+    "dev": "serve --listen 5173 .",
+    "build": "node build.js",
+    "preview": "serve --listen 5174 dist"
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
+  },
+  "browserslist": [
+    "defaults",
+    "not IE 11"
+  ]
+}

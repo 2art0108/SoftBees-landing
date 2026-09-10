@@ -2,7 +2,7 @@
   "name": "softbees-website",
   "version": "1.0.0",
   "private": true,
-  "description": "SoftBees marketing site — static, self-contained build for Vercel.",
+  "description": "SoftBees marketing site — static build for Vercel.",
   "scripts": {
     "build": "node build.js",
     "dev": "npx --yes serve public -l 3000",
