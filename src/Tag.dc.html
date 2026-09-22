@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<span style="{{ tagStyle }}">{{ label }}</span>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:120,&quot;height&quot;:36},&quot;label&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;ISO 27001&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      label: this.props.label ?? '',
+      tagStyle: "display:inline-flex;align-items:center;padding:8px 15px;border-radius:100px;background:rgba(255,255,255,.08);color:#F7F6F4;font-family:'InterVariable','Inter',sans-serif;font-feature-settings:'cv11' 1;font-size:15px;font-weight:400;white-space:nowrap;pointer-events:none"
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div style="position:absolute;top:0;left:0;width:100%;height:0;overflow:visible;isolation:isolate;pointer-events:none">
+  <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:100vw;max-width:1920px;height:100vh;overflow:hidden;pointer-events:none;z-index:0;-webkit-mask-image:radial-gradient(70% 78% at 64% 52%,#000 0%,rgba(0,0,0,.7) 26%,rgba(0,0,0,.25) 46%,transparent 68%),linear-gradient(180deg,transparent 0%,#000 22%,#000 78%,transparent 100%);-webkit-mask-composite:source-in;mask-image:radial-gradient(70% 78% at 64% 52%,#000 0%,rgba(0,0,0,.7) 26%,rgba(0,0,0,.25) 46%,transparent 68%),linear-gradient(180deg,transparent 0%,#000 22%,#000 78%,transparent 100%);mask-composite:intersect">
+    <div ref="{{ setUsRef }}" data-us-project="v9vm63Ay1t7IiaZsmKg3" style="position:absolute;left:50%;top:50%;width:118%;height:118%;transform:translate(-50%,-50%) scale(0.82)"></div>
+  </div>
+  <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:100vw;max-width:1920px;height:100vh;z-index:1;pointer-events:none;background:linear-gradient(180deg,#070709 0%,transparent 16%,transparent 60%,#070709 100%)"></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1220,&quot;height&quot;:560}}">
+class Component extends DCLogic {
+  setUsRef = (el) => { if (el && el !== this._usEl) { this._usEl = el; this.mountUnicorn(); } };
+
+  _pruneDetachedScenes() {
+    const us = window.UnicornStudio;
+    if (!us || !Array.isArray(us.scenes)) return;
+    for (let i = us.scenes.length - 1; i >= 0; i--) {
+      const scene = us.scenes[i];
+      const el = scene && scene.element;
+      if (!el || !document.body.contains(el)) {
+        try { if (typeof scene.destroy === 'function') scene.destroy(); } catch (e) {}
+        us.scenes.splice(i, 1);
+      }
+    }
+  }
+
+  mountUnicorn() {
+    let tries = 0;
+    const run = () => {
+      const u = window.UnicornStudio;
+      if (u && typeof u.init === 'function') {
+        this._pruneDetachedScenes();
+        u.init();
+        return;
+      }
+      if (tries++ < 50) { setTimeout(run, 100); return; }
+      if (!window.UnicornStudio) {
+        window.UnicornStudio = { isInitialized: false };
+        const s = document.createElement('script');
+        s.src = 'https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.2.13/dist/unicornStudio.umd.js';
+        s.onload = () => { this._pruneDetachedScenes(); window.UnicornStudio.init(); };
+        (document.head || document.body).appendChild(s);
+      }
+    };
+    run();
+  }
+
+  componentWillUnmount() {
+    const us = window.UnicornStudio;
+    if (!us || !Array.isArray(us.scenes) || !this._usEl) return;
+    for (let i = us.scenes.length - 1; i >= 0; i--) {
+      if (us.scenes[i].element === this._usEl) {
+        try { if (typeof us.scenes[i].destroy === 'function') us.scenes[i].destroy(); } catch (e) {}
+        us.scenes.splice(i, 1);
+      }
+    }
+  }
+
+  renderVals() {
+    return { setUsRef: this.setUsRef };
+  }
+}
+</script>
+</body>
+</html>

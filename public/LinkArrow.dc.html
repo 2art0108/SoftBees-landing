@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<a onClick="{{ onClick }}" style="display:inline-flex;align-items:center;gap:8px;font-family:'InterVariable','Inter',sans-serif;font-feature-settings:'cv11' 1;font-size:.9rem;font-weight:500;color:rgba(255,255,255,.64);text-decoration:none;cursor:pointer;transition:color .22s ease" style-hover="color:#FFFFFF;--ax:2.5px">
+  <span>{{ label }}</span>
+  <span style="transform:translateX(var(--ax,0px));transition:transform .28s cubic-bezier(.22,.61,.28,1)">→</span>
+</a>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:180,&quot;height&quot;:32},&quot;label&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Дізнатися більше&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      label: this.props.label ?? 'Дізнатися більше',
+      onClick: this.props.onClick ?? (() => {})
+    };
+  }
+}
+</script>
+</body>
+</html>
