@@ -1388,7 +1388,7 @@ class Component extends DCLogic {
     this._techPreloaded = true;
     const files = ['cicd.png', 'docker.png', 'sql.png', 'php.png', 'kubernetes.png', 'nodejs.png', 'java.png', 'aws.png',
       'dart.png', 'flutter.png', 'kotlin.png', 'lottie.png', 'angular.png', 'bloc.svg', 'rxjs.png', 'swift.svg',
-      'figma.svg', 'framer.svg', 'aftereffects.svg', 'spline.png', 'chatgpt.svg', 'claude.svg', 'unicorn.svg', 'jitter.svg'];
+      'figma.svg', 'framer.svg', 'aftereffects.svg', 'spline.png', 'chatgpt.svg', 'claude.svg', 'unicorn.svg', 'jitter.svg', 'bedrock.svg', 'python.svg', 'langchain.svg', 'huggingface.svg'];
     const busted = ['bloc.svg', 'swift.svg', 'angular.png', 'rxjs.png', 'figma.svg', 'framer.svg', 'spline.png'];
     files.forEach((f) => { const img = new Image(); img.src = 'assets/tech/' + f + (busted.includes(f) ? '?v=7' : ''); });
   }
@@ -2010,13 +2010,13 @@ class Component extends DCLogic {
       this._techTabRefs[key] = (el) => {
         this._techTabEls = this._techTabEls || {};
         this._techTabEls[key] = el;
-        if (key === (this.state.techTab || 'backend')) this.measureTechTabIndicator();
+        if (key === (this.state.techTab || 'ai')) this.measureTechTabIndicator();
       };
     }
     return this._techTabRefs[key];
   };
   measureTechTabIndicator = () => {
-    const key = this.state.techTab || 'backend';
+    const key = this.state.techTab || 'ai';
     const el = this._techTabEls && this._techTabEls[key];
     if (!el) return;
     const left = el.offsetLeft;
@@ -2047,7 +2047,7 @@ class Component extends DCLogic {
         return {
           src: '', isText: true, label: item.label,
           cellStyle: 'display:flex;align-items:center;justify-content:center;height:' + cellH + 'px;padding:0 ' + cellPad + ';transition:background .3s ease;' + borders.join(';'),
-          labelTextStyle: {fontFamily: "'InterVariable','Inter',sans-serif", fontFeatureSettings: "'cv11' 1", fontWeight: 500, fontSize: mobile ? '.92rem' : '1.05rem', color: '#F7F6F4', textAlign: 'center', transform: 'scale(var(--tl-scale,1))', transition: 'transform .3s ease'}
+          labelTextStyle: {fontFamily: "'InterVariable','Inter',sans-serif", fontFeatureSettings: "'cv11' 1", fontWeight: 500, fontSize: mobile ? '1.058rem' : '1.2075rem', color: '#F7F6F4', textAlign: 'center', transform: 'scale(var(--tl-scale,1))', transition: 'transform .3s ease'}
         };
       }
       const url = 'assets/tech/' + file + (['bloc.svg', 'swift.svg', 'angular.png', 'rxjs.png', 'figma.svg', 'framer.svg', 'spline.png'].includes(file) ? '?v=7' : '');
@@ -2255,11 +2255,11 @@ class Component extends DCLogic {
       trustChips: [{label: 'ISO 27001'}, {label: 'Diia.City resident'}, {label: 'Money20/20 Europe 2026'}, {label: 'Web Summit 2024 & 2025'}],
       productsChips: [{label: 'ISO 27001'}, {label: 'Diia.City resident'}, {label: '5 необанків за 4 роки'}],
       techChips: ['Kotlin', 'Swift', 'React', 'Node.js', 'Java', 'PostgreSQL', 'Kubernetes', 'AWS', 'Kafka', 'Дія.Підпис', 'КЕП', 'QR НБУ'].map((t) => ({label: t})),
-      isTechTabAi: this.state.techTab === 'ai',
-      isTechTabBackend: (this.state.techTab || 'backend') === 'backend',
+      isTechTabAi: (this.state.techTab || 'ai') === 'ai',
+      isTechTabBackend: this.state.techTab === 'backend',
       isTechTabFrontend: this.state.techTab === 'frontend',
       isTechTabDesign: this.state.techTab === 'design',
-      techTabKey: this.state.techTab || 'backend',
+      techTabKey: this.state.techTab || 'ai',
       techTabIndicatorStyle: {
         position: 'absolute', top: 4, left: (this.state.techTabIndicator && this.state.techTabIndicator.left) || 4,
         width: (this.state.techTabIndicator && this.state.techTabIndicator.width) || 101,
@@ -2273,11 +2273,11 @@ class Component extends DCLogic {
         {key: 'frontend', label: 'Front-end'},
         {key: 'design', label: 'Design'}
       ].map((t) => {
-        const active = (this.state.techTab || 'backend') === t.key;
+        const active = (this.state.techTab || 'ai') === t.key;
         return {
           label: t.label,
           onClick: () => {
-            if ((this.state.techTab || 'backend') === t.key) return;
+            if ((this.state.techTab || 'ai') === t.key) return;
             this.setState({techTab: t.key}, () => this.measureTechTabIndicator());
           },
           ref: this.setTechTabRef(t.key),
@@ -2289,7 +2289,7 @@ class Component extends DCLogic {
           }
         };
       }),
-      techLogosAi: this.buildTechGrid(['claude.svg', {label: 'Amazon Bedrock'}, {label: 'OCR Engines'}, {label: 'Python'}, {label: 'LangChain'}, {label: 'Hugging Face'}, {label: 'Vector Search'}], this.state.narrow ? 2 : 4, 80),
+      techLogosAi: this.buildTechGrid(['claude.svg', 'bedrock.svg', {label: 'OCR Engines'}, 'python.svg', 'langchain.svg', 'huggingface.svg', {label: 'Vector Search'}], this.state.narrow ? 2 : 4, 80),
       techLogosBackend: this.buildTechGrid(['cicd.png', 'docker.png', 'sql.png', 'php.png', 'kubernetes.png', 'nodejs.png', 'java.png', 'aws.png'], this.state.narrow ? 2 : 4, 80),
       techLogosFrontend: this.buildTechGrid(['dart.png', 'flutter.png', 'kotlin.png', 'lottie.png', 'angular.png', 'bloc.svg', 'rxjs.png', 'swift.svg'], this.state.narrow ? 2 : 4, 80),
       techLogos: this.buildTechGrid(['figma.svg', 'framer.svg', 'aftereffects.svg', 'spline.png', 'chatgpt.svg', 'claude.svg', 'unicorn.svg', 'jitter.svg'], this.state.narrow ? 2 : 4, 80, 1.21),
