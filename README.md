@@ -1,13 +1,21 @@
 # SoftBees website
 
-Entry page: `SoftBees.dc.html` (open via any static server, e.g. `npx serve .`).
+Static site — no build step, no dependencies to install.
 
-- `*.dc.html` — page + components (loaded by `support.js`)
-- `softbees-data.js` — content data (cases, posts, events)
-- `assets/`, `uploads/` — images, icons, fonts, illustrations referenced by the site
+## Deploy on Vercel
+1. Push this folder's contents to the repository root.
+2. In Vercel: Add New → Project → import the repo. Framework preset: **Other**. Leave build/output settings empty (`vercel.json` handles them).
+3. Deploy. The site is served from `/index.html`.
 
-External runtime dependencies (CDN): Inter (rsms.me), Unicorn Studio (jsdelivr), flag icons (flagcdn.com).
+## Local preview
+`npx serve .` → http://localhost:3000 (opening the file directly via file:// will not work — components are fetched over HTTP).
 
-Contact form posts to FormSubmit → info@softbees.com. The first live submission triggers a one-time activation email to that inbox — confirm it to start delivery.
+## Structure
+- `index.html` — entry page (all routes are hash-based: `#home`, `#portfolio`, `#case/…`)
+- `*.dc.html` — components, loaded at runtime by `support.js`
+- `softbees-data.js` — content (cases, posts, events)
+- `assets/`, `uploads/` — images, icons, fonts, illustrations
 
-Accent palette (fixed): Blue #2D31FF · Purple #6E00E4 · Pink/Red #FF1C55 · Yellow #FFEB10.
+## External services
+- Inter font (rsms.me), Unicorn Studio hero animation (jsdelivr), flag icons (flagcdn.com)
+- Contact form → FormSubmit → info@softbees.com. First live submission sends a one-time activation email to that inbox; confirm it to enable delivery.
